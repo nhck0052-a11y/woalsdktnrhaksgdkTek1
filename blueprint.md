@@ -10,7 +10,7 @@ This document outlines the design and development of "The Digital Mystic," a mul
 2.  **Tarot Card of the Day:** A user draws a single, beautifully designed tarot card for a quick piece of daily guidance. The card will have a flip animation and a short interpretation.
 3.  **The Mystic Orb:** An interactive Magic 8-Ball. A user asks a question, clicks the orb, and receives an animated, mysterious answer.
 4.  **Internationalization (i18n):** Users will be able to switch between English and Korean languages for all displayed text content.
-5.  **Interactive Face Reading Test:** Integrate a Teachable Machine Image Model directly into the page for an interactive face reading experience.
+5.  **Interactive Face Reading Test:** Integrate a Teachable Machine Image Model directly into the page for an interactive face reading experience using image file uploads.
 
 ## Design & Aesthetics (Bold Definition)
 
@@ -58,14 +58,24 @@ The application is designed with ad placements in mind. The multi-feature layout
 
 ### Phase: Integrate Interactive Face Reading Test
 
-*   **Objective:** Integrate the Teachable Machine Image Model directly into the page and add an activation button.
+*   **Objective:** Integrate the Teachable Machine Image Model directly into the page for an interactive face reading experience using image file uploads, positioned at the bottom of the page.
 *   **Steps:**
     1.  **Modify `index.html`:**
-        *   Add the HTML structure (`div` for model title, `button` to start, `div` for webcam, `div` for labels) for the Teachable Machine model.
-        *   Add the Teachable Machine script (`tf.js`, `teachablemachine-image.min.js`) and the provided inline JavaScript logic.
-        *   Add a button to activate the Face Reading Test, positioned near the language selector.
-    2.  **Modify `style.css`:**
-        *   Add styling for the new Teachable Machine elements (webcam container, label container, button).
-        *   Adjust the layout of the top-right area to accommodate both the language selector and the new "Face Reading Test" button.
-    3.  **Update Translation Files:** Add new keys for the "Teachable Machine Image Model" title, "Start" button, and "Face Reading Test" button text in `locales/en.json` and `locales/ko.json`.
-    4.  **Test Locally:** Verify the model loads, webcam activates, and predictions are displayed correctly.
+        *   Remove the "Face Reading Test" button from the top-right controls.
+        *   Remove the `<button type="button" onclick="init()" ...>` from the `teachable-machine-section`.
+        *   Add an `<input type="file" id="image-upload" accept="image/*">` element within the `teachable-machine-section`.
+        *   Move the entire `teachable-machine-section` to the very bottom of the `index.html` file, right before the closing `</body>` tag.
+    2.  **Modify the inline JavaScript within `index.html`:**
+        *   Adjust `initModel()` to *not* set up a webcam.
+        *   Add event listener for `image-upload` file changes.
+        *   Implement logic to load, resize, display, and pass the uploaded image to `model.predict()`.
+        *   Remove `webcam` variable and related functions (`webcam.setup()`, `webcam.play()`, `window.requestAnimationFrame(loop)`).
+    3.  **Modify `style.css`:**
+        *   Remove styling for the old "Face Reading Test" button (`#face-test-button`).
+        *   Remove styling for the `tmStartButton`.
+        *   Add styling for the new `#image-upload` file input to make it visually appealing.
+    4.  **Update Translation Files:**
+        *   Remove the `faceTestButtonText` key.
+        *   Remove the `tmStartButton` key.
+        *   Add a new key for `imageUploadPlaceholder` if needed for the file input's `::before` content.
+    5.  **Test Locally:** Verify that file upload works correctly, the model processes the image, and predictions are displayed.
