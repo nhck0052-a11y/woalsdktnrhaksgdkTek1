@@ -1,33 +1,69 @@
 
+let translations = {};
+let currentLanguage = 'en'; // Default language
+
 const fortuneButton = document.getElementById('fortune-button');
 const fortuneText = document.getElementById('fortune-text');
+const langEnButton = document.getElementById('lang-en');
+const langKoButton = document.getElementById('lang-ko');
 
-const fortunes = [
-    "A beautiful, smart, and loving person will be coming into your life.",
-    "A dubious friend may be an enemy in camouflage.",
-    "A faithful friend is a strong defense.",
-    "A fresh start will put you on your way.",
-    "A friend asks only for your time not your money.",
-    "A friend is a present you give yourself.",
-    "A golden egg of opportunity falls into your lap this month.",
-    "A good time to finish up old tasks.",
-    "A hunch is creativity trying to tell you something.",
-    "A lifetime of happiness lies ahead of you.",
-    "A new perspective will come with the new year.",
-    "A person is never too old to learn.",
-    "A small donation is call for. It’s the right thing to do.",
-    "A smile is your passport into the hearts of others.",
-    "A smooth long journey! Great expectations.",
-    "A surprise conference call. From an admirer.",
-    "A truly rich life contains love and art in abundance.",
-    "Accept something that you cannot change, and you will feel better.",
-    "Adventure can be real happiness.",
-    "Advice is like kissing. It costs nothing and is a pleasant thing to do."
-];
+async function loadLanguage(lang) {
+    try {
+        const response = await fetch(`locales/${lang}.json`);
+        translations = await response.json();
+        currentLanguage = lang;
+        applyTranslations();
+        updateLanguageButtons();
+    } catch (error) {
+        console.error('Error loading language file:', error);
+    }
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[key]) {
+            element.textContent = translations[key];
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+        const key = element.getAttribute('data-i18n-aria-label');
+        if (translations[key]) {
+            element.setAttribute('aria-label', translations[key]);
+        }
+    });
+
+    // Update the document title
+    const titleElement = document.querySelector('title');
+    const titleKey = titleElement.getAttribute('data-i18n');
+    if (translations[titleKey]) {
+        titleElement.textContent = translations[titleKey];
+    }
+}
+
+function updateLanguageButtons() {
+    langEnButton.classList.remove('active');
+    langKoButton.classList.remove('active');
+    if (currentLanguage === 'en') {
+        langEnButton.classList.add('active');
+    } else {
+        langKoButton.classList.add('active');
+    }
+}
+
+langEnButton.addEventListener('click', () => loadLanguage('en'));
+langKoButton.addEventListener('click', () => loadLanguage('ko'));
 
 fortuneButton.addEventListener('click', () => {
-    const randomIndex = Math.floor(Math.random() * fortunes.length);
-    const randomFortune = fortunes[randomIndex];
+    // Fortunes will now come from the translation file
+    const fortunesArray = translations.fortunes || []; // Ensure fortunes exist
+    if (fortunesArray.length === 0) {
+        console.warn("No fortunes found for the current language.");
+        return;
+    }
+    const randomIndex = Math.floor(Math.random() * fortunesArray.length);
+    const randomFortune = fortunesArray[randomIndex];
 
     fortuneText.classList.remove('fade-in');
 
@@ -38,5 +74,8 @@ fortuneButton.addEventListener('click', () => {
         fortuneText.style.opacity = 1;
         fortuneText.textContent = randomFortune;
         fortuneText.classList.add('fade-in');
-    }, 100); // A small delay to ensure the class is removed before adding it again
+    }, 100);
 });
+
+// Load default language on page load
+loadLanguage(localStorage.getItem('language') || 'en');

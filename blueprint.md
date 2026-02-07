@@ -9,6 +9,7 @@ This document outlines the design and development of "The Digital Mystic," a mul
 1.  **Fortune Cookie:** The original feature. A user clicks a cookie to get a random fortune.
 2.  **Tarot Card of the Day:** A user draws a single, beautifully designed tarot card for a quick piece of daily guidance. The card will have a flip animation and a short interpretation.
 3.  **The Mystic Orb:** An interactive Magic 8-Ball. A user asks a question, clicks the orb, and receives an animated, mysterious answer.
+4.  **Internationalization (i18n):** Users will be able to switch between English and Korean languages for all displayed text content.
 
 ## Design & Aesthetics (Bold Definition)
 
@@ -34,3 +35,22 @@ The application is designed with ad placements in mind. The multi-feature layout
     1.  **Update `index.html`:** Create the new structure including a navigation bar, and sections for each of the three tools.
     2.  **Update `style.css`:** Implement the full "Bold Definition" redesign. Style the navigation and the layout for all three sections.
     3.  **Update `main.js`:** Refactor the code to handle navigation and the logic for all three separate tools.
+
+### Phase: Internationalization (i18n) and Deployment
+
+*   **Objective:** Implement Korean/English language switching and deploy the application.
+*   **Steps:**
+    1.  **Create Translation Files:** Create `locales/en.json` and `locales/ko.json` to store all translatable strings.
+    2.  **Modify `index.html`:**
+        *   Add a language selection UI (e.g., toggle buttons).
+        *   Add `data-i18n` attributes to elements that need translation.
+    3.  **Modify `main.js`:**
+        *   Implement a `loadLanguage` function to fetch and apply translations based on the selected language.
+        *   Add event listeners for language selection UI.
+        *   Initialize the application with a default language.
+    4.  **Modify `style.css`:** Add styling for the language selection UI.
+    5.  **Test Locally:** Verify that language switching works correctly for all content.
+    6.  **Firebase Deployment:**
+        *   **Firebase Authentication:** Run `firebase login` in your terminal and follow the instructions to authenticate your Firebase account.
+        *   Ensure `firebase.json` is configured correctly for hosting.
+        *   Run `firebase deploy` to deploy the updated application.
