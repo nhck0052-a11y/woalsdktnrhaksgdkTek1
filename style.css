@@ -38,6 +38,11 @@ header h1 {
     text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
 }
 
+header {
+    padding-right: 150px; /* Add padding to the right to make space for top-right controls */
+    position: relative; /* Ensure header content respects its own boundaries */
+}
+
 header p {
     font-style: italic;
     opacity: 0.8;
