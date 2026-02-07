@@ -26,5 +26,7 @@
     "Adventure can be real happiness.",
     "Advice is like kissing. It costs nothing and is a pleasant thing to do."
   ],
-  "faceReadingLinkText": "Face Reading Test"
+  "teachableMachineTitle": "Teachable Machine Image Model",
+  "tmStartButton": "Start",
+  "faceTestButtonText": "Face Reading Test"
 }

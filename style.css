@@ -133,27 +133,84 @@ footer {
     box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* Face Reading Link Styles */
-.face-reading-section {
+/* Top Right Controls */
+.top-right-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px; /* Space between language selector and face test button */
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other content */
+}
+
+/* Language Selector Styles (now within top-right-controls, remove absolute positioning here) */
+.language-selector {
+    display: flex;
+    gap: 10px;
+}
+
+/* Teachable Machine Section Styles */
+.teachable-machine-section {
     margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    border: 2px dashed var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-.face-reading-link {
-    display: inline-block;
-    background: var(--accent-color);
-    color: var(--background-color); /* Darker text for contrast */
-    padding: 15px 30px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 1.2rem;
+.teachable-machine-section div[data-i18n="teachableMachineTitle"] {
+    font-size: 1.8rem;
+    color: var(--accent-color);
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-shadow: 0 0 5px var(--accent-color);
 }
 
-.face-reading-link:hover {
-    background-color: #ffd700; /* A brighter gold */
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+.teachable-machine-section button[data-i18n="tmStartButton"] {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.1rem;
 }
 
+.teachable-machine-section button[data-i18n="tmStartButton"]:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+#webcam-container {
+    margin-top: 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#webcam-container canvas {
+    display: block; /* Remove extra space below canvas */
+}
+
+#label-container {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    text-align: left;
+    width: 200px; /* Match webcam width */
+}
+
+#label-container div {
+    margin-bottom: 5px;
+    padding: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+}

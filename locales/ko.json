@@ -26,5 +26,7 @@
     "모험은 진정한 행복이 될 수 있습니다.",
     "충고는 키스와 같습니다. 비용이 들지 않으며 즐거운 일입니다."
   ],
-  "faceReadingLinkText": "관상 테스트"
+  "teachableMachineTitle": "티처블 머신 이미지 모델",
+  "tmStartButton": "시작",
+  "faceTestButtonText": "관상 테스트"
 }
