@@ -36,73 +36,9 @@
             <p data-i18n="footerText"></p>
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <script type="text/javascript">
-    const URL = "https://teachablemachine.withgoogle.com/models/BqpR6ZHhi/";
-    let model, labelContainer, maxPredictions;
-    let imageForPrediction = null; // To store the image loaded from file
-
-    async function initModel() {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
-    }
-
-    // Call initModel once on page load
-    initModel();
-
-    document.getElementById('image-upload').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    // Create a canvas to resize the image to 200x200
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 200;
-                    canvas.height = 200;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, 200, 200);
-
-                    // Display the image in webcam-container
-                    const webcamContainer = document.getElementById("webcam-container");
-                    webcamContainer.innerHTML = ''; // Clear previous content
-                    webcamContainer.appendChild(canvas);
-
-                    imageForPrediction = canvas; // Set the image for prediction
-                    predict(); // Run prediction immediately
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    });
-
-    async function predict() {
-        if (!model || !imageForPrediction) {
-            console.log("Model not loaded or no image for prediction.");
-            return;
-        }
-
-        const prediction = await model.predict(imageForPrediction);
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
-    }
-</script>
-    <div class="teachable-machine-section">
-        <div data-i18n="teachableMachineTitle"></div>
-        <input type="file" id="image-upload" accept="image/*">
-        <div id="webcam-container"></div>
-        <div id="label-container"></div>
+    <button id="face-reading-trigger-button" class="action-button" data-i18n="faceReadingTriggerText"></button>
+    <div id="face-reading-app-container" style="display:none;">
+        <!-- Teachable Machine content will be dynamically loaded here -->
     </div>
     <script src="main.js"></script>
 </body>

@@ -10,7 +10,7 @@ This document outlines the design and development of "The Digital Mystic," a mul
 2.  **Tarot Card of the Day:** A user draws a single, beautifully designed tarot card for a quick piece of daily guidance. The card will have a flip animation and a short interpretation.
 3.  **The Mystic Orb:** An interactive Magic 8-Ball. A user asks a question, clicks the orb, and receives an animated, mysterious answer.
 4.  **Internationalization (i18n):** Users will be able to switch between English and Korean languages for all displayed text content.
-5.  **Interactive Face Reading Test:** Integrate a Teachable Machine Image Model directly into the page for an interactive face reading experience using image file uploads.
+5.  **Interactive Face Reading Test:** A Teachable Machine Image Model, activated on demand from a button at the bottom of the page, for an interactive face reading experience using webcam input.
 
 ## Design & Aesthetics (Bold Definition)
 
@@ -56,26 +56,28 @@ The application is designed with ad placements in mind. The multi-feature layout
         *   Ensure `firebase.json` is configured correctly for hosting.
         *   Run `firebase deploy` to deploy the updated application.
 
-### Phase: Integrate Interactive Face Reading Test
+### Phase: Dynamic Interactive Face Reading Test
 
-*   **Objective:** Integrate the Teachable Machine Image Model directly into the page for an interactive face reading experience using image file uploads, positioned at the bottom of the page.
+*   **Objective:** Integrate the Teachable Machine Image Model, activated on demand from a button at the bottom of the page, using webcam input.
 *   **Steps:**
     1.  **Modify `index.html`:**
-        *   Remove the "Face Reading Test" button from the top-right controls.
-        *   Remove the `<button type="button" onclick="init()" ...>` from the `teachable-machine-section`.
-        *   Add an `<input type="file" id="image-upload" accept="image/*">` element within the `teachable-machine-section`.
-        *   Move the entire `teachable-machine-section` to the very bottom of the `index.html` file, right before the closing `</body>` tag.
-    2.  **Modify the inline JavaScript within `index.html`:**
-        *   Adjust `initModel()` to *not* set up a webcam.
-        *   Add event listener for `image-upload` file changes.
-        *   Implement logic to load, resize, display, and pass the uploaded image to `model.predict()`.
-        *   Remove `webcam` variable and related functions (`webcam.setup()`, `webcam.play()`, `window.requestAnimationFrame(loop)`).
+        *   Completely remove the `<div class="teachable-machine-section">` block and its associated TensorFlow and Teachable Machine Image library `<script>` tags, as well as the inline `<script type="text/javascript">` block, from the `<body>`.
+        *   Add a new button (`<button id="face-reading-trigger-button" ...>`) at the bottom of the `<body>` (outside `.container`) for "Face Reading Test".
+        *   Add a *hidden* `div` (`<div id="face-reading-app-container" style="display:none;"></div>`) right before the main `<script src="main.js"></script>` tag. This div will house the dynamically loaded TM content.
+    2.  **Modify `main.js`:**
+        *   Add an event listener to `#face-reading-trigger-button`.
+        *   When clicked, the listener should:
+            *   Reveal `#face-reading-app-container`.
+            *   Dynamically create and append `<script>` tags for TensorFlow (`tf.min.js`) and Teachable Machine Image (`teachablemachine-image.min.js`) to the `head` or `body` if not already present.
+            *   Dynamically inject the original Teachable Machine HTML structure (`<div data-i18n="teachableMachineTitle"></div>`, `<button type="button" onclick="init()" data-i18n="tmStartButton"></button>`, `<div id="webcam-container"></div>`, `<div id="label-container"></div>`) into `#face-reading-app-container`.
+            *   Dynamically create and append a `<script type="text/javascript">` tag containing the original Teachable Machine JavaScript logic (webcam-based `init()`, `loop()`, `predict()`) to `#face-reading-app-container` or `body`.
+            *   Ensure `init()` is called *after* all scripts and HTML are loaded and injected.
     3.  **Modify `style.css`:**
-        *   Remove styling for the old "Face Reading Test" button (`#face-test-button`).
-        *   Remove styling for the `tmStartButton`.
-        *   Add styling for the new `#image-upload` file input to make it visually appealing.
+        *   Remove all specific styling related to `.teachable-machine-section`, `#image-upload`, `#webcam-container`, `#label-container` and their children.
+        *   Add styling for the new `#face-reading-trigger-button` at the bottom.
+        *   Add basic styling for `#face-reading-app-container` to control its hidden/revealed state.
     4.  **Update Translation Files:**
-        *   Remove the `faceTestButtonText` key.
-        *   Remove the `tmStartButton` key.
-        *   Add a new key for `imageUploadPlaceholder` if needed for the file input's `::before` content.
-    5.  **Test Locally:** Verify that file upload works correctly, the model processes the image, and predictions are displayed.
+        *   Add translation for the new `#face-reading-trigger-button` (e.g., `faceReadingTriggerText`).
+        *   Re-add `teachableMachineTitle` and `tmStartButton` translations for the dynamically injected content.
+        *   Remove `imageUploadPlaceholder` translation.
+    5.  **Test Locally:** Verify that clicking the button dynamically loads the TM model, activates the webcam, and displays predictions correctly.

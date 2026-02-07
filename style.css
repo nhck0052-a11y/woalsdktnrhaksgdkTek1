@@ -1,4 +1,3 @@
-
 :root {
     --primary-color: #9b59b6; /* Amethyst */
     --secondary-color: #34495e; /* Wet Asphalt */
@@ -155,27 +154,61 @@ footer {
     gap: 10px;
 }
 
-/* Teachable Machine Section Styles */
-.teachable-machine-section {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    border: 2px dashed var(--secondary-color);
-    display: flex;
+/* New Face Reading Trigger Button */
+#face-reading-trigger-button {
+    display: block; /* Make it a block element to center */
+    margin: 2rem auto; /* Center the button */
+    background: var(--accent-color);
+    color: var(--background-color); /* Darker text for contrast */
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    border: none;
+}
+
+#face-reading-trigger-button:hover {
+    background-color: #ffd700; /* A brighter gold */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Teachable Machine App Container (initially hidden) */
+#face-reading-app-container {
+    background: rgba(44, 62, 80, 0.9);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    position: fixed; /* Fixed position to overlay content */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000; /* Ensure it's above other content */
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+    overflow-y: auto; /* Enable scrolling if content is too tall */
+    display: flex; /* Use flex to center content inside */
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    border: 2px solid var(--accent-color);
 }
 
-.teachable-machine-section div[data-i18n="teachableMachineTitle"] {
-    font-size: 1.8rem;
+/* Dynamically injected Teachable Machine content styling */
+#face-reading-app-container div[data-i18n="teachableMachineTitle"] {
+    font-size: 2rem;
     color: var(--accent-color);
     font-weight: bold;
-    text-shadow: 0 0 5px var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-color);
+    margin-bottom: 1rem;
 }
 
-#image-upload {
+#face-reading-app-container button[data-i18n="tmStartButton"] {
     background: var(--primary-color);
     color: var(--text-color);
     border: none;
@@ -186,51 +219,26 @@ footer {
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 1.1rem;
-    max-width: 200px;
-    text-align: center;
 }
 
-#image-upload::-webkit-file-upload-button {
-    visibility: hidden;
-    width: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#image-upload::before {
-    content: attr(data-i18n-placeholder) !important; /* Use data-i18n-placeholder */
-    color: var(--text-color);
-    display: inline-block;
-    background: var(--primary-color);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: 'Playfair Display', serif;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    text-align: center;
-}
-
-#image-upload:hover::before {
+#face-reading-app-container button[data-i18n="tmStartButton"]:hover {
     background-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: 0 0 10px var(--accent-color);
 }
 
-#webcam-container {
+#face-reading-app-container #webcam-container {
     margin-top: 1rem;
     border: 2px solid var(--primary-color);
     border-radius: 8px;
     overflow: hidden;
 }
 
-#webcam-container canvas {
+#face-reading-app-container #webcam-container canvas {
     display: block; /* Remove extra space below canvas */
 }
 
-#label-container {
+#face-reading-app-container #label-container {
     margin-top: 1rem;
     font-size: 1.1rem;
     color: var(--text-color);
@@ -238,7 +246,7 @@ footer {
     width: 200px; /* Match webcam width */
 }
 
-#label-container div {
+#face-reading-app-container #label-container div {
     margin-bottom: 5px;
     padding: 5px;
     background: rgba(0,0,0,0.2);

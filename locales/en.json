@@ -27,5 +27,6 @@
     "Advice is like kissing. It costs nothing and is a pleasant thing to do."
   ],
   "teachableMachineTitle": "Teachable Machine Image Model",
-  "imageUploadPlaceholder": "Upload Image for Face Reading"
+  "tmStartButton": "Start",
+  "faceReadingTriggerText": "Start Face Reading Test"
 }

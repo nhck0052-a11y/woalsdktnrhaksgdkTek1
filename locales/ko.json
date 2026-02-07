@@ -27,5 +27,6 @@
     "충고는 키스와 같습니다. 비용이 들지 않으며 즐거운 일입니다."
   ],
   "teachableMachineTitle": "티처블 머신 이미지 모델",
-  "imageUploadPlaceholder": "관상 테스트를 위한 이미지 업로드"
+  "tmStartButton": "시작",
+  "faceReadingTriggerText": "관상 테스트 시작"
 }
