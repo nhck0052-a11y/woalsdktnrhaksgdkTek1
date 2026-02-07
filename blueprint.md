@@ -10,6 +10,7 @@ This document outlines the design and development of "The Digital Mystic," a mul
 2.  **Tarot Card of the Day:** A user draws a single, beautifully designed tarot card for a quick piece of daily guidance. The card will have a flip animation and a short interpretation.
 3.  **The Mystic Orb:** An interactive Magic 8-Ball. A user asks a question, clicks the orb, and receives an animated, mysterious answer.
 4.  **Internationalization (i18n):** Users will be able to switch between English and Korean languages for all displayed text content.
+5.  **Interactive Face Reading Test:** Integrate a Teachable Machine Image Model directly into the page for an interactive face reading experience.
 
 ## Design & Aesthetics (Bold Definition)
 
@@ -54,3 +55,17 @@ The application is designed with ad placements in mind. The multi-feature layout
         *   **Firebase Authentication:** Run `firebase login` in your terminal and follow the instructions to authenticate your Firebase account.
         *   Ensure `firebase.json` is configured correctly for hosting.
         *   Run `firebase deploy` to deploy the updated application.
+
+### Phase: Integrate Interactive Face Reading Test
+
+*   **Objective:** Integrate the Teachable Machine Image Model directly into the page and add an activation button.
+*   **Steps:**
+    1.  **Modify `index.html`:**
+        *   Add the HTML structure (`div` for model title, `button` to start, `div` for webcam, `div` for labels) for the Teachable Machine model.
+        *   Add the Teachable Machine script (`tf.js`, `teachablemachine-image.min.js`) and the provided inline JavaScript logic.
+        *   Add a button to activate the Face Reading Test, positioned near the language selector.
+    2.  **Modify `style.css`:**
+        *   Add styling for the new Teachable Machine elements (webcam container, label container, button).
+        *   Adjust the layout of the top-right area to accommodate both the language selector and the new "Face Reading Test" button.
+    3.  **Update Translation Files:** Add new keys for the "Teachable Machine Image Model" title, "Start" button, and "Face Reading Test" button text in `locales/en.json` and `locales/ko.json`.
+    4.  **Test Locally:** Verify the model loads, webcam activates, and predictions are displayed correctly.
