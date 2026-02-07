@@ -1,14 +1,33 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Fortune Cookie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="container">
+        <header>
+            <h1>Cosmic Fortune Cookie</h1>
+            <p>Click the cookie to reveal your destiny!</p>
+        </header>
+
+        <main>
+            <div id="fortune-container">
+                <p id="fortune-text">Your fortune awaits...</p>
+            </div>
+            <button id="fortune-button" aria-label="Get a new fortune">
+                <img src="https://em-content.zobj.net/source/microsoft-teams/363/fortune-cookie_1f960.png" alt="Fortune Cookie">
+            </button>
+        </main>
+
+        <footer>
+            <p>May your day be filled with cosmic wonders.</p>
+        </footer>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
