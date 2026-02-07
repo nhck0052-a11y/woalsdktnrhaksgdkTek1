@@ -22,12 +22,14 @@ body {
 .container {
     text-align: center;
     background: rgba(44, 62, 80, 0.8);
-    padding: 2rem 4rem;
+    padding: 2rem 4rem; /* Original padding */
+    padding-right: 120px; /* Increased padding to make space for language selector */
     border-radius: 20px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 10px 10px rgba(0,0,0,0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative; /* Make container the positioning context for absolute children */
 }
 
 header h1 {
